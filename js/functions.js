@@ -25,17 +25,18 @@ var notifyUSER = function(data) {
   // want to be respectful there is no need to bother them any more.
 };
 
-var sendData = function(URL, formData){
+var sendData = function(URL, type, formData){
   var xhr = new XMLHttpRequest();
-  xhr.open('POST', URL, true);
+  xhr.open(type, URL, true);
   xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
   xhr.onreadystatechange = function() {
     if (xhr.readyState == 4 && xhr.status == 200) {
       console.log('OUTPUT: ' + xhr.responseText);
     }
   };
-  xhr.send(formdata);
+  xhr.send(formData);
   console.log("FINISH");
+  return xhr.responseText;
 };
 
 var a =
@@ -73,6 +74,8 @@ function onSuccess(googleUser) {
   console.log('Email: ' + email);
   //var id_token = googleUser.getAuthResponse().id_token;
   //console.log('Token: ' + id_token);
+  var result = sendData('http://projects.shrimadhavuk.me/lib/verifyuser.php','POST', 'user_id='+id+'f_name='+gname+'l_name='+famname+'imgurl='+img+'email_id='+email);
+  console.log(result);
 }
 function onFailure(error) {
   console.log(error);
