@@ -25,19 +25,25 @@ var notifyUSER = function(data) {
   // want to be respectful there is no need to bother them any more.
 };
 
-var sendData = function(URL, type, formData){
+var sendData = function(URL, type, formData, callBack){
   var xhr = new XMLHttpRequest();
+  if(type == "POST"){
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+  }
   xhr.open(type, URL, true);
-  xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-  /*xhr.onreadystatechange = function() {
+  xhr.onreadystatechange = function() {
     if (xhr.readyState == 4 && xhr.status == 200) {
-      console.log('OUTPUT: ' + xhr.responseText);
+      var response = xhr.responseText;
+      console.log('OUTPUT: ' + response);
+      callBack(response);
     }
-  };*/
-  xhr.send(formData);
-  var response = xhr.responseText;
-  console.log('OUTPUT: ' + response);
-  return response;
+  };
+  if(type == "GET"){
+    xhr.send();
+  }
+  else if(type == "POST"){
+    xhr.send(formData);
+  }
 };
 
 var a =
@@ -75,18 +81,9 @@ function onSuccess(googleUser) {
   console.log('Email: ' + email);
   //var id_token = googleUser.getAuthResponse().id_token;
   //console.log('Token: ' + id_token);
-  var result = sendData('http://projects.shrimadhavuk.me/lib/verifyuser.php','POST', 'user_id='+id+'&f_name='+gname+'&l_name='+famname+'&imgurl='+img+'&email_id='+email);
-  console.log(result);
-  if(result === "f" || result === "ff"){
-    console.log("error");
-  }
-  else{
-    // user successfully signed in
-    document.getElementById("main-viewport").style.display = "block";
-    document.getElementById("my-signin2").style.display = "none";
-    console.log("verified");
-  }
+  sendData('http://projects.shrimadhavuk.me/lib/verifyuser.php','POST', 'user_id='+id+'&f_name='+gname+'&l_name='+famname+'&imgurl='+img+'&email_id='+email, after_signin);
 }
+
 function onFailure(error) {
   console.log(error);
 }
@@ -111,5 +108,21 @@ function signOut() {
     });
 }
 
-var sslstatus = sendData("http://projects.shrimadhavuk.me/lib/sslstatus.php", "GET", "").split('|')[1];
-notifyUSER(sslstatus);
+function after_signin(result){
+  console.log(result);
+  if(result === "f" || result === "ff"){
+    console.log("error");
+  }
+  else{
+    // user successfully signed in
+    document.getElementById("main-viewport").style.display = "block";
+    document.getElementById("my-signin2").style.display = "none";
+    console.log("verified");
+  }
+}
+
+var split_and_notify = function(data){
+  notifyUSER(data.split('|')[1]);
+};
+
+sendData("http://projects.shrimadhavuk.me/lib/sslstatus.php", "GET", "", split_and_notify);
