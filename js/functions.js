@@ -27,10 +27,10 @@ var notifyUSER = function(data) {
 
 var sendData = function(URL, type, formData, callBack){
   var xhr = new XMLHttpRequest();
+  xhr.open(type, URL, true);
   if(type == "POST"){
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
   }
-  xhr.open(type, URL, true);
   xhr.onreadystatechange = function() {
     if (xhr.readyState == 4 && xhr.status == 200) {
       var response = xhr.responseText;
