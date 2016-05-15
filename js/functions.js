@@ -27,14 +27,15 @@ var notifyUSER = function(data) {
 
 var sendData = function(URL, type, formData){
   var xhr = new XMLHttpRequest();
-  xhr.open(type, URL, true);
+  xhr.open(type, URL, false);
   xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-  xhr.onreadystatechange = function() {
+  /*xhr.onreadystatechange = function() {
     if (xhr.readyState == 4 && xhr.status == 200) {
       console.log('OUTPUT: ' + xhr.responseText);
     }
-  };
+  };*/
   xhr.send(formData);
+  console.log('OUTPUT: ' + xhr.responseText);
   console.log("FINISH");
   return xhr.responseText;
 };
@@ -74,8 +75,17 @@ function onSuccess(googleUser) {
   console.log('Email: ' + email);
   //var id_token = googleUser.getAuthResponse().id_token;
   //console.log('Token: ' + id_token);
-  var result = sendData('http://projects.shrimadhavuk.me/lib/verifyuser.php','POST', 'user_id='+id+'f_name='+gname+'l_name='+famname+'imgurl='+img+'email_id='+email);
+  var result = sendData('http://projects.shrimadhavuk.me/lib/verifyuser.php','POST', 'user_id='+id+'&f_name='+gname+'&l_name='+famname+'&imgurl='+img+'&email_id='+email);
   console.log(result);
+  if(result === "f" || result === "ff"){
+    console.log("error");
+  }
+  else{
+    // user successfully signed in
+    document.getElementById("main-viewport").style.display = "block";
+    document.getElementById("my-signin2").style.display = "none";
+    console.log("verified");
+  }
 }
 function onFailure(error) {
   console.log(error);
@@ -95,6 +105,8 @@ function renderButton() {
 function signOut() {
     var auth2 = gapi.auth2.getAuthInstance();
     auth2.signOut().then(function () {
+      document.getElementById("main-viewport").style.display = "none";
+      document.getElementById("my-signin2").style.display = "block";
       console.log('User signed out.');
     });
 }
