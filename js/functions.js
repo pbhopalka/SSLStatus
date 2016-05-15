@@ -81,7 +81,7 @@ function onSuccess(googleUser) {
   console.log('Email: ' + email);
   //var id_token = googleUser.getAuthResponse().id_token;
   //console.log('Token: ' + id_token);
-  sendData('http://projects.shrimadhavuk.me/lib/verifyuser.php','POST', 'user_id='+id+'&f_name='+gname+'&l_name='+famname+'&imgurl='+img+'&email_id='+email, after_signin);
+  sendData('//projects.shrimadhavuk.me/lib/verifyuser.php','POST', 'user_id='+id+'&f_name='+gname+'&l_name='+famname+'&imgurl='+img+'&email_id='+email, after_signin);
 }
 
 function onFailure(error) {
@@ -125,4 +125,4 @@ var split_and_notify = function(data){
   notifyUSER(data.split('|')[1]);
 };
 
-sendData("http://projects.shrimadhavuk.me/lib/sslstatus.php", "GET", "", split_and_notify);
+sendData("//projects.shrimadhavuk.me/lib/sslstatus.php", "GET", "", split_and_notify);
