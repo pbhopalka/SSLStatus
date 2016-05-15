@@ -27,7 +27,7 @@ var notifyUSER = function(data) {
 
 var sendData = function(URL, type, formData){
   var xhr = new XMLHttpRequest();
-  xhr.open(type, URL, false);
+  xhr.open(type, URL, true);
   xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
   /*xhr.onreadystatechange = function() {
     if (xhr.readyState == 4 && xhr.status == 200) {
@@ -35,9 +35,9 @@ var sendData = function(URL, type, formData){
     }
   };*/
   xhr.send(formData);
-  console.log('OUTPUT: ' + xhr.responseText);
-  console.log("FINISH");
-  return xhr.responseText;
+  var response = xhr.responseText;
+  console.log('OUTPUT: ' + response);
+  return response;
 };
 
 var a =
@@ -110,3 +110,6 @@ function signOut() {
       console.log('User signed out.');
     });
 }
+
+var sslstatus = sendData("http://projects.shrimadhavuk.me/lib/sslstatus.php", "GET", "").split('|')[1];
+notifyUSER(sslstatus);
