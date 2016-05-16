@@ -1,8 +1,11 @@
 
 var notifyUSER = function(data) {
+
+  navigator.serviceWorker.register('js/sw.js');
+
   // Let's check if the browser supports notifications
   if (!("Notification" in window)) {
-    alert("This browser does not support system notifications");
+    console.log("This browser does not support system notifications");
   }
 
   // Let's check whether notification permissions have already been granted
@@ -21,6 +24,13 @@ var notifyUSER = function(data) {
     });
   }
 
+  Notification.requestPermission(function(result) {
+    if (result === 'granted') {
+      navigator.serviceWorker.ready.then(function(registration) {
+        registration.showNotification(data);
+      });
+    }
+  });
   // Finally, if the user has denied notifications and you
   // want to be respectful there is no need to bother them any more.
 };
