@@ -57,9 +57,15 @@ var sendData = function(type, URL, formData, callBack){
   }
 };
 
+var IsAthenaOpen = function(){
+  var status = false;
+  var Athena_Status_URL = "http://athena.nitc.ac.in/status.txt";
+  sendData("GET", CORS_URL + "?q=" + encodeURIComponent(Athena_Status_URL), "", function(data){
+    if(data.split('|')[0] == "open"){
+      status = true;
+    }
+    return status;
+  });
+}();
 
-var Athena_Status_URL = "http://athena.nitc.ac.in/status.txt";
-
-sendData("GET", CORS_URL + "?q=" + encodeURIComponent(Athena_Status_URL), "", function(data){
-  notifyUSER(data.split('|')[1]);
-});
+console.log(IsAthenaOpen);
