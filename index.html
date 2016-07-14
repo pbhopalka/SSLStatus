@@ -30,29 +30,50 @@
 
         <div class="container" id="main-viewport">
           <div class="list-group">
-            <a class="list-group-item" onclick="IsAthenaOpen()" id="IsAthenaOpen">IsAthenaOpen ?</a>
+            <a class="list-group-item" onclick="IsAthenaOpen()" id="IsAthenaOpen">
+              <form class="form-inline" role="form" method="POST" onsubmit="IsAthenaOpen(); return false;">
+                <div class="input-group">
+                  <span class="input-group-addon">IsAthenaOpen</span>
+                  <span class="input-group-btn">
+                    <button type="submit" class="btn btn-default"> ?</button>
+                  </span>
+                </div>
+              </form>
+            </a>
             <a class="list-group-item" id="TurnOnSSLSystem">
-              <form class="form-inline" method="POST" onsubmit="TurnOnSSLSystem(document.getElementById('input_sslno').value); return false;">
-                Turn ON SSL-
-                <input type="number" class="form-control input-small" placeholder="2" id="input_sslno" name="input_sslno" min="1" max="74" />
-                <!-- http://stackoverflow.com/a/8355050/4723940 -->
-                <button type="submit" class="btn"> ? </button>
+              <form class="form-inline" role="form" method="POST" onsubmit="TurnOnSSLSystem(document.getElementById('input_sslno').value); return false;">
+                <div class="input-group">
+                  <span class="input-group-addon">Turn ON SSL-</span>
+                  <input type="number" class="form-control input-small" placeholder="2" id="input_sslno" name="input_sslno" min="1" max="74" required />
+                  <!-- http://stackoverflow.com/a/8355050/4723940 -->
+                  <span class="input-group-btn">
+                    <button type="submit" class="btn btn-default"> ?</button>
+                  </span>
+                </div>
               </form>
             </a>
             <a class="list-group-item" id="IsEmailValid">
-              <form class="form-inline" method="POST" onsubmit="IsEmailValid(document.getElementById('input_emailid').value); return false;">
-                Is
-                <input type="email" class="form-control input-small" placeholder="master@shrimadhavuk.me" id="input_emailid" name="input_emailid" />
-                <button type="submit" class="btn"> valid ? </button>
+              <form class="form-inline" role="form" method="POST" onsubmit="IsEmailValid(document.getElementById('input_emailid').value); return false;">
+                <div class="input-group">
+                  <span class="input-group-addon">Is </span>
+                  <input type="email" class="form-control input-small" placeholder="master@shrimadhavuk.me" id="input_emailid" name="input_emailid" required />
+                  <span class="input-group-btn">
+                    <button type="submit" class="btn btn-default"> valid?</button>
+                  </span>
+                </div>
               </form>
             </a>
             <a class="list-group-item" id="SSHToSSLSystem">
-              <form class="form-inline" method="POST" onsubmit="SSHToSSLSystem(document.getElementById('ssh_ssluser').value, document.getElementById('ssh_sslno').value, prompt('input SSL password')); return false;">
-                $ ssh
-                <input type="text" class="form-control input-small" placeholder="shrimadhav_b130253cs" id="ssh_ssluser" name="ssh_ssluser" />
-                @ssl-
-                <input type="number" class="form-control input-small" placeholder="2" id="ssh_sslno" name="ssh_sslno" min="1" max="74" />
-                <button type="submit" class="btn"> ? </button>
+              <form class="form-inline" role="form" method="POST" onsubmit="SSHToSSLSystem(document.getElementById('ssh_ssluser').value, document.getElementById('ssh_sslno').value); return false;">
+                <div class="input-group">
+                  <span class="input-group-addon">$ ssh </span>
+                  <input type="text" class="form-control input-small" placeholder="shrimadhav_b130253cs" id="ssh_ssluser" name="ssh_ssluser" required />
+                  <span class="input-group-addon">@ssl-</span>
+                  <input type="number" class="form-control input-small" placeholder="2" id="ssh_sslno" name="ssh_sslno" min="1" max="74" required />
+                  <span class="input-group-btn">
+                    <button type="submit" class="btn btn-default"> [ENTER]</button>
+                  </span>
+                </div>
               </form>
             </a>
           </div>

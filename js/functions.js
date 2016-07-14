@@ -76,11 +76,13 @@ var IsAthenaOpen = function(){
     function(data){
       if(data.split('|')[0] == "open"){
         status = true;
-        document.getElementById('IsAthenaOpen').style = "background-color: #3B8516; color: #555;";
+        document.getElementById('IsAthenaOpen').style = "background-color: #3B8516; color: #f5f5f5; text-align: center;";
+        document.getElementById('IsAthenaOpen').innerHTML = data;
       }
       else{
         status = false;
-        document.getElementById('IsAthenaOpen').style = "background-color: #D2101E; color: #555;";
+        document.getElementById('IsAthenaOpen').style = "background-color: #D2101E; color: #fff; text-align: center;";
+        document.getElementById('IsAthenaOpen').innerHTML = data;
       }
     }
   )
@@ -105,7 +107,8 @@ var IsEmailValid = function(email){
   console.log("not implemented" + email);
 };
 
-var SSHToSSLSystem = function(username, sslno, password){
+var SSHToSSLSystem = function(username, sslno){
+  var password = prompt('input SSH password: ');
   console.log("SSHToSSLSystem: ");
   console.log("not implemented" + username + "@ssl-" + sslno + "::" + password);
 };
