@@ -31,41 +31,81 @@ var notifyUSER = function(data) {
   // want to be respectful there is no need to bother them any more.
 };
 
-var sendData = function(type, URL, formData, callBack){
-  // create a XHR object
-  var xhr = new XMLHttpRequest();
-  // open the XHR object in asynchronous mode
-  xhr.open(type, URL, true);
-  if(type == "POST"){
-    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded; charset=ISO-8859-1');
-  }
-  xhr.onreadystatechange = function() {
-    if (xhr.readyState == 4 && xhr.status == 200) {
-      // OK! we have a successful response.
-      var response = xhr.responseText;
-      //console.log('OUTPUT: ' + response);
-      // do something else with the response
-      callBack(response);
+var sendData = function(type, URL, formData){
+  // => http://stackoverflow.com/a/30008115/4723940
+  return new Promise(function (resolve, reject) {
+    // create a XHR object
+    var xhr = new XMLHttpRequest();
+    // open the XHR object in asynchronous mode
+    xhr.open(type, URL, true);
+    if(type == "POST"){
+      xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded; charset=ISO-8859-1');
     }
-  };
-  // GET or POST the URL according to type
-  if(type == "GET"){
-    xhr.send();
-  }
-  if(type == "POST"){
-    xhr.send(formData);
-  }
+    xhr.onload = function() {
+      if (this.status >= 200 && this.status < 300) {
+        resolve(xhr.response);
+      }
+      else {
+        reject({
+          status: this.status,
+          statusText: xhr.statusText
+        });
+      }
+    };
+    xhr.onerror = function () {
+      reject({
+        status: this.status,
+        statusText: xhr.statusText
+      });
+    };
+    // GET or POST the URL according to type
+    if(type == "GET"){
+      xhr.send();
+    }
+    if(type == "POST"){
+      xhr.send(formData);
+    }
+  });
 };
 
 var IsAthenaOpen = function(){
   var status = false;
   var Athena_Status_URL = "http://athena.nitc.ac.in/status.txt";
-  sendData("GET", CORS_URL + "?q=" + encodeURIComponent(Athena_Status_URL), "", function(data){
-    if(data.split('|')[0] == "open"){
-      status = true;
+  sendData("POST", CORS_URL , "q=" + encodeURIComponent(Athena_Status_URL))
+  .then(
+    function(data){
+      if(data.split('|')[0] == "open"){
+        status = true;
+        document.getElementById('IsAthenaOpen').style = "background-color: #3B8516; color: #555;";
+      }
+      else{
+        status = false;
+        document.getElementById('IsAthenaOpen').style = "background-color: #D2101E; color: #555;";
+      }
     }
-    return status;
+  )
+  .catch(function(err){
+    status = false;
+    console.log("IsAthenaOpen: " + err.status + ", " + err.statusText);
   });
-}();
+};
 
-console.log(IsAthenaOpen);
+var IsSSLSystemOn = function(sslno){
+  console.log("IsSSLSystemOn: ");
+  console.log("not implemented" + sslno);
+};
+
+var TurnOnSSLSystem = function(sslno){
+  console.log("TurnOnSSLSystem: " + "not implemented");
+  console.log("not implemented" + sslno);
+};
+
+var IsEmailValid = function(email){
+  console.log("IsEmailValid: " + "not implemented");
+  console.log("not implemented" + email);
+};
+
+var SSHToSSLSystem = function(username, sslno, password){
+  console.log("SSHToSSLSystem: ");
+  console.log("not implemented" + username + "@ssl-" + sslno + "::" + password);
+};

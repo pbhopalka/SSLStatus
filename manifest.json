@@ -1,4 +1,7 @@
 {
   "name": "Software Systems Lab",
+  "start_url": "\/index.html",
+  "display": "standalone",
+  "orientation": "portrait",
   "gcm_sender_id": "87671890425"
 }
