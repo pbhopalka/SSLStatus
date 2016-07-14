@@ -1,7 +1,23 @@
 {
+  "lang": "en",
+  "dir": "ltr",
   "name": "Software Systems Lab",
-  "start_url": "\/index.html",
-  "display": "standalone",
+  "description": "This lab was established in 2006. The objective of this laboratory is to provide the infrastructure for conducting the regular labs (Data Structures Lab, DBMS Lab, Network Lab, Compiler Lab, OS Lab and Programming Languages Lab) and project works for the BTech and MCA Programs. The lab is equipped with state of the art servers, desktops and software (Linux and compilers for C, C++, Perl, TCL, PHP, Java, Python, etc.)",
+  "short_name": "SSLNITC",
+  "icons": [{
+    "src": "img/icon64.ico",
+    "sizes": "64x64",
+    "type": "image/ico"
+  },{
+    "src": "img/icon64.ico",
+    "sizes": "64x64"
+  }, {
+    "src": "img/icon128.png",
+    "sizes": "128x128"
+  }],
+  "scope": "/SSLStatus/",
+  "start_url": "/SSLStatus/index.html",
+  "display": "fullscreen",
   "orientation": "portrait",
   "gcm_sender_id": "87671890425"
 }
