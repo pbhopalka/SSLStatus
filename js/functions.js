@@ -74,7 +74,7 @@ var sendData = function(type, URL, formData){
 
 var IsAthenaOpen = function(){
   var status = false;
-  sendData("POST", THE_REAL_CORS_URL , "q=" + encodeURIComponent(Athena_Status_URL))
+  sendData("POST", THE_REAL_CORS_URL , "q=" + encodeURIComponent(ATHENA_STATUS_URL))
   .then(
     function(data){
       if(data.split('|')[0] == "open"){
