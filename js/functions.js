@@ -1,7 +1,9 @@
 
-var BASE_URL = "http://athena.nitc.ac.in/shrimadhav_b130253cs/SSL0N3R";
-var CORS_URL = BASE_URL + "/cors.php";
-var STATUS_URL = BASE_URL + "/turnon.php";
+var THE_REAL_CORS_URL = "https://projects.shrimadhavuk.me/tracker/cors.php";
+var SSL0N3R_BASE_URL = "http://athena.nitc.ac.in/shrimadhav_b130253cs/SSL0N3R";
+var ATHENA_STATUS_URL = "http://athena.nitc.ac.in/status.txt";
+var ATHENA_CORS_URL = SSL0N3R_BASE_URL + "/cors.php";
+var SSL_W0L_URL = SSL0N3R_BASE_URL + "/turnon.php";
 
 var notifyUSER = function(data) {
   // Let's check if the browser supports notifications
@@ -72,8 +74,7 @@ var sendData = function(type, URL, formData){
 
 var IsAthenaOpen = function(){
   var status = false;
-  var Athena_Status_URL = "http://athena.nitc.ac.in/status.txt";
-  sendData("POST", CORS_URL , "q=" + encodeURIComponent(Athena_Status_URL))
+  sendData("POST", THE_REAL_CORS_URL , "q=" + encodeURIComponent(Athena_Status_URL))
   .then(
     function(data){
       if(data.split('|')[0] == "open"){
@@ -97,7 +98,7 @@ var IsAthenaOpen = function(){
 var IsSSLSystemOn = function(sslno){
   var status = false;
   console.log("IsSSLSystemOn: ");
-  sendData("POST", STATUS_URL + "/status/ssl-" + sslno, "")
+  sendData("POST", THE_REAL_CORS_URL, "q=" + encodeURIComponent(SSL_W0L_URL + "/status/ssl-" + sslno))
   .then(function(data){
     console.log(data);
   })
@@ -110,7 +111,7 @@ var IsSSLSystemOn = function(sslno){
 var TurnOnSSLSystem = function(sslno){
   var status = false;
   console.log("TurnOnSSLSystem: ");
-  sendData("POST", STATUS_URL + "/turnon/ssl-" + sslno, "")
+  sendData("POST", THE_REAL_CORS_URL, "q=" + encodeURIComponent(SSL_W0L_URL + "/status/ssl-" + sslno))
   .then(function(data){
     var jsonobj = JSON.parse(data);
     if(jsonobj.status == "success"){
