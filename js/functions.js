@@ -1,5 +1,7 @@
 
-var CORS_URL = "https://projects.shrimadhavuk.me/tracker/cors.php";
+var BASE_URL = "http://athena.nitc.ac.in/shrimadhav_b130253cs/SSL0N3R";
+var CORS_URL = BASE_URL + "/cors.php";
+var STATUS_URL = BASE_URL + "/turnon.php";
 
 var notifyUSER = function(data) {
   // Let's check if the browser supports notifications
@@ -76,13 +78,13 @@ var IsAthenaOpen = function(){
     function(data){
       if(data.split('|')[0] == "open"){
         status = true;
-        document.getElementById('IsAthenaOpen').style = "background-color: #3B8516; color: #f5f5f5; text-align: center;";
-        document.getElementById('IsAthenaOpen').innerHTML = data;
+        document.getElementById('IsAthenaOpen_result').style = "background-color: #3B8516; color: #f5f5f5; text-align: center;";
+        document.getElementById('IsAthenaOpen_result').innerHTML = data;
       }
       else{
         status = false;
-        document.getElementById('IsAthenaOpen').style = "background-color: #D2101E; color: #fff; text-align: center;";
-        document.getElementById('IsAthenaOpen').innerHTML = data;
+        document.getElementById('IsAthenaOpen_result').style = "background-color: #D2101E; color: #fff; text-align: center;";
+        document.getElementById('IsAthenaOpen_result').innerHTML = data;
       }
     }
   )
@@ -93,13 +95,39 @@ var IsAthenaOpen = function(){
 };
 
 var IsSSLSystemOn = function(sslno){
+  var status = false;
   console.log("IsSSLSystemOn: ");
-  console.log("not implemented" + sslno);
+  sendData("POST", STATUS_URL + "/status/ssl-" + sslno, "")
+  .then(function(data){
+    console.log(data);
+  })
+  .catch(function(err){
+    status = false;
+    console.log("IsSSLSystemOn: " + err.status + ", " + err.statusText);
+  });
 };
 
 var TurnOnSSLSystem = function(sslno){
-  console.log("TurnOnSSLSystem: " + "not implemented");
-  console.log("not implemented" + sslno);
+  var status = false;
+  console.log("TurnOnSSLSystem: ");
+  sendData("POST", STATUS_URL + "/turnon/ssl-" + sslno, "")
+  .then(function(data){
+    var jsonobj = JSON.parse(data);
+    if(jsonobj.status == "success"){
+      status = true;
+      document.getElementById('TurnOnSSLSystem_result').style = "background-color: #3B8516; color: #f5f5f5; text-align: center;";
+      document.getElementById('TurnOnSSLSystem_result').innerHTML = "YES";
+    }
+    else{
+      status = false;
+      document.getElementById('TurnOnSSLSystem_result').style = "background-color: #D2101E; color: #fff; text-align: center;";
+      document.getElementById('TurnOnSSLSystem_result').innerHTML = "NO";
+    }
+  })
+  .catch(function(err){
+    status = false;
+    console.log("TurnOnSSLSystem: " + err.status + ", " + err.statusText);
+  });
 };
 
 var IsEmailValid = function(email){
