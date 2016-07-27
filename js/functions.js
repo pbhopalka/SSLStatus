@@ -111,7 +111,7 @@ var IsSSLSystemOn = function(sslno){
 var TurnOnSSLSystem = function(sslno){
   var status = false;
   console.log("TurnOnSSLSystem: ");
-  sendData("POST", THE_REAL_CORS_URL, "q=" + encodeURIComponent(SSL_W0L_URL + "/status/ssl-" + sslno))
+  sendData("POST", THE_REAL_CORS_URL, "q=" + encodeURIComponent(SSL_W0L_URL + "/turnon/ssl-" + sslno))
   .then(function(data){
     var jsonobj = JSON.parse(data);
     if(jsonobj.status == "success"){
